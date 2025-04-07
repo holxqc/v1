@@ -15,10 +15,6 @@
         Start typing to see your text here
       </div>
     </div>
-    <div class="text-input">
-      <textarea id="input-text" placeholder="Type your text here..."></textarea>
-      <div class="char-count">0 characters</div>
-    </div>
     <div class="controls">
       <div class="control-group">
         <label for="font-size">Font Size</label>
@@ -39,6 +35,11 @@
         <input type="color" id="text-color" value="#1F2937">
       </div>
       <button id="reset-button">Reset</button>
+    </div>
+    <!-- Text input moved to bottom -->
+    <div class="text-input">
+      <input type="text" id="input-text" placeholder="Type your text here...">
+      <div class="char-count">0 characters</div>
     </div>
     <footer>
       <p>Take A Screenshot To Save!</p>
