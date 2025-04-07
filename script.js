@@ -11,7 +11,7 @@ document.addEventListener('DOMContentLoaded', function() {
   const resetButton = document.getElementById('reset-button');
   const currentYear = document.getElementById('current-year');
   const appTitle = document.getElementById('app-title');
-  
+  appTitle.style.fontWeight = "600";
   // Set current year in footer
   currentYear.textContent = new Date().getFullYear();
 
