@@ -48,6 +48,8 @@ header h1 {
   word-wrap: break-word;
   width: 100%;
   text-align: center;
+  text-shadow: 0 0 0.5px currentColor, 0 0 0.5px currentColor; /* Adds thickness */
+  -webkit-font-smoothing: antialiased; /* Makes text smoother */
 }
 .text-input {
   margin-bottom: 20px;
