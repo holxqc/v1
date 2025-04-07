@@ -69,9 +69,9 @@ document.addEventListener('DOMContentLoaded', function() {
   });
   
   thicknessSlider.addEventListener('input', function() {
-    const thickness = this.value;
-    thicknessValue.textContent = thickness;
-    displayText.style.fontWeight = getWeightFromThickness(thickness);
+    const thickness = parseFloat(this.value);
+    thicknessValue.textContent = thickness.toFixed(1);
+    getWeightFromThickness(thickness);
     
     // Save to localStorage
     localStorage.setItem('miltonThickness', thickness);
@@ -118,15 +118,24 @@ document.addEventListener('DOMContentLoaded', function() {
   }
   
   function getWeightFromThickness(thickness) {
-  // Map thickness value (0-5) to standard font weights
-  if (thickness <= 0.5) return "100"; // Thin
-  if (thickness <= 1.0) return "200"; // Extra Light
-  if (thickness <= 1.5) return "300"; // Light
-  if (thickness <= 2.0) return "400"; // Regular/Normal
-  if (thickness <= 2.5) return "500"; // Medium
-  if (thickness <= 3.0) return "600"; // Semi Bold
-  if (thickness <= 3.5) return "700"; // Bold
-  if (thickness <= 4.0) return "800"; // Extra Bold
-  return "900"; // Black (heaviest)
+    // Use both font-weight and text-shadow to create a more gradual thickness effect
+    const normalizedThickness = Math.min(5, Math.max(0, thickness));
+    
+    const weight = Math.min(900, Math.max(400, Math.round(400 + normalizedThickness * 100)));
+    
+    // Apply both weight and a subtle text shadow for thickness effect
+    displayText.style.fontWeight = weight.toString();
+    
+    // Add a subtle text shadow effect for lower values to simulate "thinness"
+    if (normalizedThickness < 2.5) {
+      displayText.style.textShadow = 'none';
+    } else {
+      // Add increasing shadow/stroke effect as thickness increases
+      const blurAmount = (normalizedThickness - 2.5) * 0.2;
+      const strokeAmount = (normalizedThickness - 2.5) * 0.5;
+      displayText.style.textShadow = `0 0 ${blurAmount}px currentColor, 0 0 ${strokeAmount}px currentColor`;
+    }
+    
+    return weight.toString();
   }
 });
