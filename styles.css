@@ -17,6 +17,9 @@ body {
   color: #333;
   background-color: #ffffff;
   padding: 20px;
+  min-height: 100vh; /* Makes the body at least full viewport height */
+  position: relative; /* For absolute positioning of footer */
+  padding-bottom: 80px; /* Space for footer */
 }
 
 .container {
@@ -134,9 +137,13 @@ button:hover {
 
 footer {
   text-align: center;
-  margin-top: 30px;
   color: #6b7280;
   font-size: 14px;
+  position: absolute; /* Position at the bottom */
+  bottom: 20px;
+  left: 0;
+  right: 0;
+  width: 100%;
 }
 
 @media (max-width: 600px) {
