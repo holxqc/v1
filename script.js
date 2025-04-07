@@ -118,9 +118,15 @@ document.addEventListener('DOMContentLoaded', function() {
   }
   
   function getWeightFromThickness(thickness) {
-    // Convert thickness value (0-5) to a font weight (100-900)
-    // This is an approximation since font-weight is normally in steps of 100
-    const weight = Math.min(900, Math.max(100, Math.round(100 + thickness * 160)));
-    return weight.toString();
+  // Map thickness value (0-5) to standard font weights
+  if (thickness <= 0.5) return "100"; // Thin
+  if (thickness <= 1.0) return "200"; // Extra Light
+  if (thickness <= 1.5) return "300"; // Light
+  if (thickness <= 2.0) return "400"; // Regular/Normal
+  if (thickness <= 2.5) return "500"; // Medium
+  if (thickness <= 3.0) return "600"; // Semi Bold
+  if (thickness <= 3.5) return "700"; // Bold
+  if (thickness <= 4.0) return "800"; // Extra Bold
+  return "900"; // Black (heaviest)
   }
 });
