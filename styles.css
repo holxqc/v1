@@ -11,23 +11,29 @@
   box-sizing: border-box;
 }
 
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
 body {
   font-family: 'Arial', sans-serif;
   line-height: 1.6;
   color: #333;
   background-color: #ffffff;
-  padding: 20px;
-  min-height: 100vh; /* Makes the body at least full viewport height */
-  position: relative; /* For absolute positioning of footer */
-  padding-bottom: 80px; /* Space for footer */
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
 }
 
 .container {
+  flex: 1;
   max-width: 800px;
   margin: 0 auto;
   background-color: white;
   padding: 30px;
-  /* Removed border-radius and box-shadow */
+  padding-bottom: 60px; /* Extra space for footer */
 }
 
 header {
@@ -139,11 +145,11 @@ footer {
   text-align: center;
   color: #6b7280;
   font-size: 14px;
-  position: absolute; /* Position at the bottom */
-  bottom: 20px;
-  left: 0;
-  right: 0;
+  padding: 20px 0;
   width: 100%;
+  position: fixed; /* Fixed at the bottom of viewport */
+  bottom: 0;
+  left: 0;
 }
 
 @media (max-width: 600px) {
