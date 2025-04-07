@@ -1,13 +1,7 @@
 @font-face {
   font-family: 'Milton';
-  src: url('fonts/Milton-Regular.otf') format('opentype');
+  src: url('fonts/Milton_One.otf') format('opentype');
   font-weight: normal;
-  font-style: normal;
-}
-@font-face {
-  font-family: 'Milton';
-  src: url('fonts/Milton-Bold.otf') format('opentype');
-  font-weight: bold;
   font-style: normal;
 }
 * {
