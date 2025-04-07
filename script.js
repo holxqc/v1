@@ -21,7 +21,7 @@ document.addEventListener('DOMContentLoaded', function() {
     textColor: '#1F2937'
   };
   
-  // Initialize text area with saved content or empty string
+  // Initialize text input with saved content or empty string
   const savedText = localStorage.getItem('miltonText') || '';
   inputText.value = savedText;
   
@@ -49,6 +49,7 @@ document.addEventListener('DOMContentLoaded', function() {
   displayText.style.color = savedTextColor;
   
   // Event listeners
+  // Input event for text field (works the same with input as it did with textarea)
   inputText.addEventListener('input', function() {
     const text = this.value;
     displayText.textContent = text || defaultSettings.text;
@@ -56,6 +57,13 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Save to localStorage
     localStorage.setItem('miltonText', text);
+  });
+  
+  // Add keypress event to handle Enter key - this is new for single-line inputs
+  inputText.addEventListener('keypress', function(e) {
+    if (e.key === 'Enter') {
+      e.preventDefault(); // Prevent form submission if in a form
+    }
   });
   
   fontSizeSlider.addEventListener('input', function() {
