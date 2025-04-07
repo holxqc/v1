@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Milton Font Generator</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>Milton Font Generator</h1>
+      <p>Type below to see your text in the elegant Milton font</p>
+    </header>
+    <div class="text-display">
+      <div id="display-text" class="milton-font">
+        Start typing to see your text here
+      </div>
+    </div>
+    <div class="text-input">
+      <textarea id="input-text" placeholder="Type your text here..."></textarea>
+      <div class="char-count">0 characters</div>
+    </div>
+    <div class="controls">
+      <div class="control-group">
+        <label for="font-size">Font Size</label>
+        <div class="slider-container">
+          <input type="range" id="font-size" min="20" max="100" value="40">
+          <span id="size-value">40px</span>
+        </div>
+      </div>
+      
+      <div class="control-group">
+        <label for="text-color">Text Color</label>
+        <input type="color" id="text-color" value="#1F2937">
+      </div>
+      
+      <button id="reset-button">Reset</button>
+    </div>
+    <footer>
+      <p>Enjoy creating beautiful text with the Milton font!</p>
+      <p>© <span id="current-year"></span> Milton Font Generator</p>
+    </footer>
+  </div>
+  
+  <script src="script.js"></script>
+</body>
+</html>
