@@ -21,8 +21,9 @@ document.addEventListener('DOMContentLoaded', function() {
   const savedText = localStorage.getItem('miltonText') || '';
   inputText.value = savedText;
   
-  // Update display text with saved content
-  displayText.textContent = savedText || defaultSettings.text;
+  // Update display text with saved content and format with special wrapping
+  const formattedText = formatTextWithSpecialWrapping(savedText || defaultSettings.text);
+  displayText.innerHTML = formattedText;
   
   // Auto-size the text based on content length
   autoSizeText(displayText, savedText || defaultSettings.text);
@@ -43,7 +44,10 @@ document.addEventListener('DOMContentLoaded', function() {
   // Input event for text field
   inputText.addEventListener('input', function() {
     const text = this.value;
-    displayText.textContent = text || defaultSettings.text;
+    
+    // Format text with special wrapping (like the brat generator)
+    const formattedText = formatTextWithSpecialWrapping(text || defaultSettings.text);
+    displayText.innerHTML = formattedText;
     
     // Auto-size the text based on content length
     autoSizeText(displayText, text || defaultSettings.text);
@@ -79,7 +83,8 @@ document.addEventListener('DOMContentLoaded', function() {
   resetButton.addEventListener('click', function() {
     // Reset text
     inputText.value = '';
-    displayText.textContent = defaultSettings.text;
+    const formattedText = formatTextWithSpecialWrapping(defaultSettings.text);
+    displayText.innerHTML = formattedText;
     
     // Auto-size the text
     autoSizeText(displayText, defaultSettings.text);
@@ -134,6 +139,50 @@ document.addEventListener('DOMContentLoaded', function() {
     element.style.fontSize = `${fontSize}px`;
   }
   
+  // Function to format text with special wrapping behavior
+  function formatTextWithSpecialWrapping(text) {
+    if (!text || text.length === 0) {
+      return defaultSettings.text;
+    }
+    
+    // If text is short enough to fit on one line, just return it
+    if (text.length <= 25) {
+      return text;
+    }
+    
+    // For longer text, add line breaks every ~25 characters
+    // but try to break at spaces for more natural breaks
+    let result = '';
+    let currentLineLength = 0;
+    const words = text.split(' ');
+    let isNewLine = false; // Track if we're starting a new line
+    
+    for (let i = 0; i < words.length; i++) {
+      const word = words[i];
+      
+      // If adding this word exceeds our target line length or it's the first word after a line break
+      if (currentLineLength + word.length > 20 || (i > 0 && isNewLine)) {
+        if (!isNewLine) {
+          // Add a line break for the first word that doesn't fit
+          result += '<br>';
+          isNewLine = true;
+        }
+        
+        // Add the word with special styling for right-side appearance
+        // The word will appear from the right side and gradually move left as more text is added
+        result += '<span style="display: inline-block; text-align: right; padding-left: 20px;">' + word + '</span> ';
+        currentLineLength = word.length + 1; // +1 for space
+        isNewLine = false; // Reset for next words
+      } else {
+        // Otherwise just add the word with a space
+        result += word + ' ';
+        currentLineLength += word.length + 1; // +1 for space
+      }
+    }
+    
+    return result;
+  }
+  
   function getWeightFromThickness(thickness) {
     // Use both font-weight and text-shadow to create a more gradual thickness effect
     const normalizedThickness = Math.min(5, Math.max(0, thickness));
@@ -156,3 +205,4 @@ document.addEventListener('DOMContentLoaded', function() {
     return weight.toString();
   }
 });
+  
