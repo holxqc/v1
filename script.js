@@ -105,7 +105,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const length = text.length;
     let fontSize;
     
-    // Much larger font sizes as requested
+    // Much larger font sizes as requested with more gradual steps
     if (length <= 3) {
       fontSize = 300; // Extremely large text for very short inputs
     } else if (length <= 6) {
@@ -114,10 +114,18 @@ document.addEventListener('DOMContentLoaded', function() {
       fontSize = 200; // Large text
     } else if (length <= 20) {
       fontSize = 150; // Medium-large text
+    } else if (length <= 30) {
+      fontSize = 125; // Medium-large to medium transition
     } else if (length <= 40) {
       fontSize = 100; // Medium text
+    } else if (length <= 45) {
+      fontSize = 90; // Gradual step down
+    } else if (length <= 50) {
+      fontSize = 80; // Another gradual step
     } else if (length <= 60) {
-      fontSize = 75; // Medium-small text for longer content
+      fontSize = 70; // Medium-small text
+    } else if (length <= 70) {
+      fontSize = 60; // Approaching smallest
     } else {
       fontSize = 50; // Smallest text for the longest content
     }
