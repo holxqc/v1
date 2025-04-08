@@ -5,6 +5,13 @@
   font-style: normal;
 }
 
+@font-face {
+  font-family: 'Milton';
+  src: url('fonts/Milton_One-Bold.otf') format('opentype');
+  font-weight: bold;
+  font-style: normal;
+}
+
 * {
   margin: 0;
   padding: 0;
@@ -58,6 +65,7 @@ header h1 {
 
 .milton-font {
   font-family: 'Milton', serif;
+  font-weight: bold; /* Use the bold version */
   word-wrap: break-word;
   width: 100%;
   text-align: center;
@@ -167,3 +175,4 @@ footer {
     width: 100%;
   }
 }
+  
