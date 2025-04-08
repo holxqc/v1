@@ -2,7 +2,7 @@ document.addEventListener('DOMContentLoaded', function() {
   // Elements
   const inputText = document.getElementById('input-text');
   const displayText = document.getElementById('display-text');
-  const charCount = document.querySelector('.char-count');
+  // Removed charCount element
   const fontSizeSlider = document.getElementById('font-size');
   const sizeValue = document.getElementById('size-value');
   const thicknessSlider = document.getElementById('thickness-slider');
@@ -28,8 +28,7 @@ document.addEventListener('DOMContentLoaded', function() {
   // Update display text with saved content
   displayText.textContent = savedText || defaultSettings.text;
   
-  // Update character count
-  updateCharCount();
+  // Removed updateCharCount call
   
   // Initialize settings from localStorage or use defaults
   const savedFontSize = localStorage.getItem('miltonFontSize') || defaultSettings.fontSize;
@@ -53,7 +52,7 @@ document.addEventListener('DOMContentLoaded', function() {
   inputText.addEventListener('input', function() {
     const text = this.value;
     displayText.textContent = text || defaultSettings.text;
-    updateCharCount();
+    // Removed updateCharCount call
     
     // Save to localStorage
     localStorage.setItem('miltonText', text);
@@ -96,7 +95,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // Reset text
     inputText.value = '';
     displayText.textContent = defaultSettings.text;
-    updateCharCount();
+    // Removed updateCharCount call
     
     // Reset font size
     fontSizeSlider.value = defaultSettings.fontSize;
@@ -119,10 +118,7 @@ document.addEventListener('DOMContentLoaded', function() {
     localStorage.removeItem('miltonTextColor');
   });
   
-  function updateCharCount() {
-    const count = inputText.value.length;
-    charCount.textContent = `${count} character${count !== 1 ? 's' : ''}`;
-  }
+  // Removed updateCharCount function
   
   function getWeightFromThickness(thickness) {
     // Use both font-weight and text-shadow to create a more gradual thickness effect
