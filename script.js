@@ -73,8 +73,8 @@ document.addEventListener('DOMContentLoaded', function() {
     // Create a diagonal split using a gradient
     bubble.style.background = `linear-gradient(to bottom right, ${theme.textColor} 49%, ${theme.backgroundColor} 51%)`;
     
-    // Keep the tooltip
-    bubble.innerHTML = `<span class="theme-tooltip">${theme.name}</span>`;
+    // Remove tooltip
+bubble.innerHTML = '';
     bubble.dataset.index = index;
     
     bubble.addEventListener('click', () => {
