@@ -9,21 +9,12 @@
 <body>
   <div class="container">
     <header>
-      <h1>Milton Font Generator</h1>
-      <p>Type below to see your text in the elegant Milton font</p>
     </header>
-
     <div class="text-display">
       <div id="display-text" class="milton-font">
         Start typing to see your text here
       </div>
     </div>
-
-    <div class="text-input">
-      <textarea id="input-text" placeholder="Type your text here..."></textarea>
-      <div class="char-count">0 characters</div>
-    </div>
-
     <div class="controls">
       <div class="control-group">
         <label for="font-size">Font Size</label>
@@ -32,18 +23,27 @@
           <span id="size-value">40px</span>
         </div>
       </div>
-      
+      <div class="control-group">
+        <label for="thickness-slider">Thickness:</label>
+        <div class="slider-container">
+          <input type="range" id="thickness-slider" min="0" max="5" step="0.5" value="0.5">
+          <span id="thickness-value">0.5</span>
+        </div>
+      </div>
       <div class="control-group">
         <label for="text-color">Text Color</label>
         <input type="color" id="text-color" value="#1F2937">
       </div>
-      
       <button id="reset-button">Reset</button>
     </div>
-
+    <!-- Text input moved to bottom -->
+    <div class="text-input">
+      <input type="text" id="input-text" placeholder="Type your text here...">
+      <!-- Removed character count div -->
+    </div>
     <footer>
-      <p>Enjoy creating beautiful text with the Milton font!</p>
-      <p>© <span id="current-year"></span> Milton Font Generator</p>
+      <p>Take A Screenshot To Save!</p>
+      <p>© <span id="current-year"></span> Milton Generator</p>
     </footer>
   </div>
   
