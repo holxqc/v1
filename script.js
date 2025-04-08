@@ -8,6 +8,7 @@ document.addEventListener('DOMContentLoaded', function() {
   const resetButton = document.getElementById('reset-button');
   const currentYear = document.getElementById('current-year');
   const themeBubbles = document.querySelector('.theme-bubbles');
+  const container = document.querySelector('.container');
   
   // Set current year in footer
   currentYear.textContent = new Date().getFullYear();
@@ -65,7 +66,13 @@ document.addEventListener('DOMContentLoaded', function() {
     themeIndex: 0 // Default theme index
   };
   
+  // Make container transparent
+  if (container) {
+    container.style.backgroundColor = 'transparent';
+  }
+  
   // Create theme bubbles
+  themeBubbles.innerHTML = ''; // Clear any existing bubbles
   albumThemes.forEach((theme, index) => {
     const bubble = document.createElement('div');
     bubble.className = 'theme-bubble';
@@ -74,7 +81,7 @@ document.addEventListener('DOMContentLoaded', function() {
     bubble.style.background = `linear-gradient(to bottom right, ${theme.textColor} 49%, ${theme.backgroundColor} 51%)`;
     
     // Remove tooltip
-bubble.innerHTML = '';
+    bubble.innerHTML = '';
     bubble.dataset.index = index;
     
     bubble.addEventListener('click', () => {
@@ -99,8 +106,21 @@ bubble.innerHTML = '';
     displayText.style.color = theme.textColor;
     textColor.value = theme.textColor;
     
-    // Apply background color
+    // Apply background color to body
     document.body.style.backgroundColor = theme.backgroundColor;
+    
+    // Ensure no container backgrounds blocking the body background
+    if (container) {
+      container.style.backgroundColor = 'transparent';
+    }
+    
+    // Make sure all elements with backgrounds are transparent
+    const elementsToMakeTransparent = document.querySelectorAll('.text-display, .controls, .text-input, header, footer, .theme-selector');
+    elementsToMakeTransparent.forEach(el => {
+      if (el) {
+        el.style.backgroundColor = 'transparent';
+      }
+    });
     
     // Save to localStorage
     localStorage.setItem('miltonTextColor', theme.textColor);
@@ -131,6 +151,11 @@ bubble.innerHTML = '';
   textColor.value = savedTextColor;
   displayText.style.color = savedTextColor;
   document.body.style.backgroundColor = savedBackgroundColor;
+  
+  // Ensure container is transparent on load
+  if (container) {
+    container.style.backgroundColor = 'transparent';
+  }
   
   // Set active theme bubble
   const activeBubble = document.querySelector(`.theme-bubble[data-index="${savedThemeIndex}"]`);
@@ -257,4 +282,7 @@ bubble.innerHTML = '';
     
     return weight.toString();
   }
+  
+  // Apply the current theme immediately
+  applyTheme(parseInt(savedThemeIndex || 0));
 });
