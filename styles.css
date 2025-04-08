@@ -58,7 +58,7 @@ header h1 {
 
 .milton-font {
   font-family: 'Milton', serif;
-  /* No need for font-weight since we only have one weight now */
+  /* Font size will now be controlled by JS based on text length */
   word-wrap: break-word;
   width: 100%;
   text-align: center;
@@ -119,7 +119,7 @@ button:hover {
   background-color: #374151;
 }
 
-/* Reduced space between input and footer even more */
+/* Reduced space between input and footer */
 .text-input {
   margin-top: auto; /* Push to bottom of container */
   margin-bottom: 5px; /* Significantly reduced space */
