@@ -146,38 +146,44 @@ document.addEventListener('DOMContentLoaded', function() {
     }
     
     // If text is short enough to fit on one line, just return it
-    if (text.length <= 25) {
+    if (text.length <= 20) {
       return text;
     }
     
-    // For longer text, add line breaks every ~25 characters
-    // but try to break at spaces for more natural breaks
+    // For longer text, create special brat-generator style formatting
+    const charLimit = 20; // Characters per line before wrapping
     let result = '';
-    let currentLineLength = 0;
-    const words = text.split(' ');
-    let isNewLine = false; // Track if we're starting a new line
+    let currentLine = '';
+    let lineCount = 0;
     
-    for (let i = 0; i < words.length; i++) {
-      const word = words[i];
+    // Process the text character by character for more control
+    for (let i = 0; i < text.length; i++) {
+      const char = text[i];
       
-      // If adding this word exceeds our target line length or it's the first word after a line break
-      if (currentLineLength + word.length > 20 || (i > 0 && isNewLine)) {
-        if (!isNewLine) {
-          // Add a line break for the first word that doesn't fit
-          result += '<br>';
-          isNewLine = true;
+      // Add character to current line
+      currentLine += char;
+      
+      // If we've reached our character limit or hit a natural break point
+      if (currentLine.length >= charLimit || (char === ' ' && currentLine.length > charLimit * 0.75) || i === text.length - 1) {
+        if (lineCount === 0) {
+          // First line - center aligned
+          result += `<div style="width: 100%; text-align: center;">${currentLine}</div>`;
+        } else {
+          // Subsequent lines - right-aligned with increasing left margin as more lines are added
+          // This creates the effect of new text starting from right and "pushing" existing text
+          const marginLeft = Math.max(0, 60 - (lineCount * 10));
+          result += `<div style="width: 100%; text-align: right; padding-right: ${marginLeft}px;">${currentLine}</div>`;
         }
         
-        // Add the word with special styling for right-side appearance
-        // The word will appear from the right side and gradually move left as more text is added
-        result += '<span style="display: inline-block; text-align: right; padding-left: 20px;">' + word + '</span> ';
-        currentLineLength = word.length + 1; // +1 for space
-        isNewLine = false; // Reset for next words
-      } else {
-        // Otherwise just add the word with a space
-        result += word + ' ';
-        currentLineLength += word.length + 1; // +1 for space
+        currentLine = '';
+        lineCount++;
       }
+    }
+    
+    // If there's any remaining text
+    if (currentLine.length > 0) {
+      const marginLeft = Math.max(0, 60 - (lineCount * 10));
+      result += `<div style="width: 100%; text-align: right; padding-right: ${marginLeft}px;">${currentLine}</div>`;
     }
     
     return result;
@@ -205,4 +211,3 @@ document.addEventListener('DOMContentLoaded', function() {
     return weight.toString();
   }
 });
-  
