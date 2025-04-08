@@ -12,7 +12,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
   // Default values
   const defaultSettings = {
-    text: 'Start typing to see your text here',
+    text: 'Milton Generator',
     thickness: 0.5,
     textColor: '#1F2937'
   };
