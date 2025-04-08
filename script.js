@@ -2,9 +2,7 @@ document.addEventListener('DOMContentLoaded', function() {
   // Elements
   const inputText = document.getElementById('input-text');
   const displayText = document.getElementById('display-text');
-  // Removed charCount element
-  const fontSizeSlider = document.getElementById('font-size');
-  const sizeValue = document.getElementById('size-value');
+  // Removed fontSizeSlider and sizeValue
   const thicknessSlider = document.getElementById('thickness-slider');
   const thicknessValue = document.getElementById('thickness-value');
   const textColor = document.getElementById('text-color');
@@ -16,7 +14,7 @@ document.addEventListener('DOMContentLoaded', function() {
   // Default values
   const defaultSettings = {
     text: 'Start typing to see your text here',
-    fontSize: 40,
+    // Removed fontSize default
     thickness: 0.5,
     textColor: '#1F2937'
   };
@@ -28,18 +26,14 @@ document.addEventListener('DOMContentLoaded', function() {
   // Update display text with saved content
   displayText.textContent = savedText || defaultSettings.text;
   
-  // Removed updateCharCount call
+  // Auto-size the text based on content length
+  autoSizeText(displayText, savedText || defaultSettings.text);
   
   // Initialize settings from localStorage or use defaults
-  const savedFontSize = localStorage.getItem('miltonFontSize') || defaultSettings.fontSize;
   const savedThickness = localStorage.getItem('miltonThickness') || defaultSettings.thickness;
   const savedTextColor = localStorage.getItem('miltonTextColor') || defaultSettings.textColor;
   
-  // Apply saved settings
-  fontSizeSlider.value = savedFontSize;
-  sizeValue.textContent = `${savedFontSize}px`;
-  displayText.style.fontSize = `${savedFontSize}px`;
-  
+  // Apply saved settings (removed font size)
   thicknessSlider.value = savedThickness;
   thicknessValue.textContent = savedThickness;
   displayText.style.fontWeight = getWeightFromThickness(savedThickness);
@@ -48,31 +42,26 @@ document.addEventListener('DOMContentLoaded', function() {
   displayText.style.color = savedTextColor;
   
   // Event listeners
-  // Input event for text field (works the same with input as it did with textarea)
+  // Input event for text field
   inputText.addEventListener('input', function() {
     const text = this.value;
     displayText.textContent = text || defaultSettings.text;
-    // Removed updateCharCount call
+    
+    // Auto-size the text based on content length
+    autoSizeText(displayText, text || defaultSettings.text);
     
     // Save to localStorage
     localStorage.setItem('miltonText', text);
   });
   
-  // Add keypress event to handle Enter key - this is new for single-line inputs
+  // Add keypress event to handle Enter key
   inputText.addEventListener('keypress', function(e) {
     if (e.key === 'Enter') {
       e.preventDefault(); // Prevent form submission if in a form
     }
   });
   
-  fontSizeSlider.addEventListener('input', function() {
-    const size = this.value;
-    displayText.style.fontSize = `${size}px`;
-    sizeValue.textContent = `${size}px`;
-    
-    // Save to localStorage
-    localStorage.setItem('miltonFontSize', size);
-  });
+  // Removed fontSizeSlider event listener
   
   thicknessSlider.addEventListener('input', function() {
     const thickness = parseFloat(this.value);
@@ -95,12 +84,9 @@ document.addEventListener('DOMContentLoaded', function() {
     // Reset text
     inputText.value = '';
     displayText.textContent = defaultSettings.text;
-    // Removed updateCharCount call
     
-    // Reset font size
-    fontSizeSlider.value = defaultSettings.fontSize;
-    sizeValue.textContent = `${defaultSettings.fontSize}px`;
-    displayText.style.fontSize = `${defaultSettings.fontSize}px`;
+    // Auto-size the text
+    autoSizeText(displayText, defaultSettings.text);
     
     // Reset thickness
     thicknessSlider.value = defaultSettings.thickness;
@@ -118,7 +104,36 @@ document.addEventListener('DOMContentLoaded', function() {
     localStorage.removeItem('miltonTextColor');
   });
   
-  // Removed updateCharCount function
+  // Auto-size text based on content length
+  function autoSizeText(element, text) {
+    const baseSize = 60; // Starting font size for very short texts
+    const minSize = 20;  // Minimum font size
+    const length = text.length;
+    
+    let fontSize;
+    
+    if (length <= 5) {
+      fontSize = baseSize;
+    } else if (length <= 10) {
+      fontSize = baseSize - 5;
+    } else if (length <= 20) {
+      fontSize = baseSize - 10;
+    } else if (length <= 30) {
+      fontSize = baseSize - 15;
+    } else if (length <= 50) {
+      fontSize = baseSize - 20;
+    } else if (length <= 100) {
+      fontSize = baseSize - 25;
+    } else {
+      fontSize = baseSize - 30;
+    }
+    
+    // Make sure we don't go below minimum size
+    fontSize = Math.max(fontSize, minSize);
+    
+    // Apply the font size
+    element.style.fontSize = `${fontSize}px`;
+  }
   
   function getWeightFromThickness(thickness) {
     // Use both font-weight and text-shadow to create a more gradual thickness effect
