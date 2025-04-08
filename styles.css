@@ -133,6 +133,11 @@ button:hover {
   height: 50px; /* Single line height */
 }
 
+/* Remove focus outline */
+.text-input input:focus {
+  outline: none;
+}
+
 .char-count {
   text-align: right;
   font-size: 14px;
