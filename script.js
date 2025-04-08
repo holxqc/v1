@@ -2,7 +2,6 @@ document.addEventListener('DOMContentLoaded', function() {
   // Elements
   const inputText = document.getElementById('input-text');
   const displayText = document.getElementById('display-text');
-  // Removed fontSizeSlider and sizeValue
   const thicknessSlider = document.getElementById('thickness-slider');
   const thicknessValue = document.getElementById('thickness-value');
   const textColor = document.getElementById('text-color');
@@ -14,7 +13,6 @@ document.addEventListener('DOMContentLoaded', function() {
   // Default values
   const defaultSettings = {
     text: 'Start typing to see your text here',
-    // Removed fontSize default
     thickness: 0.5,
     textColor: '#1F2937'
   };
@@ -60,8 +58,6 @@ document.addEventListener('DOMContentLoaded', function() {
       e.preventDefault(); // Prevent form submission if in a form
     }
   });
-  
-  // Removed fontSizeSlider event listener
   
   thicknessSlider.addEventListener('input', function() {
     const thickness = parseFloat(this.value);
@@ -120,8 +116,10 @@ document.addEventListener('DOMContentLoaded', function() {
       fontSize = 150; // Medium-large text
     } else if (length <= 40) {
       fontSize = 100; // Medium text
+    } else if (length <= 60) {
+      fontSize = 75; // Medium-small text for longer content
     } else {
-      fontSize = 50; // Smallest text for longer content
+      fontSize = 50; // Smallest text for the longest content
     }
     
     // Apply the font size
