@@ -18,49 +18,41 @@ document.addEventListener('DOMContentLoaded', function() {
       name: "Born To Die",
       textColor: "#1A5276", // Deep blue
       backgroundColor: "#F5EEF8", // Light lavender
-      icon: "🌹"
     },
     {
       name: "Ultraviolence",
       textColor: "#FFFFFF", // White
       backgroundColor: "#17202A", // Black/dark blue
-      icon: "🔷"
     },
     {
       name: "Honeymoon",
       textColor: "#E74C3C", // Red
       backgroundColor: "#F9E79F", // Soft yellow
-      icon: "🌅"
     },
     {
       name: "Lust for Life",
       textColor: "#C0392B", // Deep red
       backgroundColor: "#FDEBD0", // Light cream
-      icon: "🌙"
     },
     {
       name: "Norman Fucking Rockwell",
       textColor: "#1E8449", // Ocean green
       backgroundColor: "#FAD7A0", // Golden sunset
-      icon: "🌊"
     },
     {
       name: "Chemtrails Over the Country Club",
       textColor: "#34495E", // Navy blue
       backgroundColor: "#F2F3F4", // Off-white
-      icon: "☁️"
     },
     {
       name: "Blue Banisters",
       textColor: "#2471A3", // Blue
       backgroundColor: "#FFFFFF", // White
-      icon: "🌿"
     },
     {
       name: "Did You Know That There's a Tunnel Under Ocean Blvd",
       textColor: "#7D3C98", // Purple
       backgroundColor: "#D6EAF8", // Light blue
-      icon: "🌊"
     }
   ];
 
@@ -77,9 +69,12 @@ document.addEventListener('DOMContentLoaded', function() {
   albumThemes.forEach((theme, index) => {
     const bubble = document.createElement('div');
     bubble.className = 'theme-bubble';
-    bubble.style.backgroundColor = theme.backgroundColor;
-    bubble.style.color = theme.textColor;
-    bubble.innerHTML = `${theme.icon}<span class="theme-tooltip">${theme.name}</span>`;
+    
+    // Create a diagonal split using a gradient
+    bubble.style.background = `linear-gradient(to bottom right, ${theme.textColor} 49%, ${theme.backgroundColor} 51%)`;
+    
+    // Keep the tooltip
+    bubble.innerHTML = `<span class="theme-tooltip">${theme.name}</span>`;
     bubble.dataset.index = index;
     
     bubble.addEventListener('click', () => {
