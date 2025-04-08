@@ -119,10 +119,10 @@ button:hover {
   background-color: #374151;
 }
 
-/* Modified to create more space between controls and text input */
+/* Reduced space between input and footer even more */
 .text-input {
   margin-top: auto; /* Push to bottom of container */
-  margin-bottom: 20px; /* Reduced space between input and footer */
+  margin-bottom: 5px; /* Significantly reduced space */
 }
 
 /* Change from textarea to input */
