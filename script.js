@@ -104,32 +104,25 @@ document.addEventListener('DOMContentLoaded', function() {
     localStorage.removeItem('miltonTextColor');
   });
   
-  // Auto-size text based on content length
+  // Auto-size text based on content length with much larger sizes
   function autoSizeText(element, text) {
-    const baseSize = 60; // Starting font size for very short texts
-    const minSize = 20;  // Minimum font size
     const length = text.length;
-    
     let fontSize;
     
-    if (length <= 5) {
-      fontSize = baseSize;
+    // Much larger font sizes as requested
+    if (length <= 3) {
+      fontSize = 300; // Extremely large text for very short inputs
+    } else if (length <= 6) {
+      fontSize = 250; // Very large text for short inputs
     } else if (length <= 10) {
-      fontSize = baseSize - 5;
+      fontSize = 200; // Large text
     } else if (length <= 20) {
-      fontSize = baseSize - 10;
-    } else if (length <= 30) {
-      fontSize = baseSize - 15;
-    } else if (length <= 50) {
-      fontSize = baseSize - 20;
-    } else if (length <= 100) {
-      fontSize = baseSize - 25;
+      fontSize = 150; // Medium-large text
+    } else if (length <= 40) {
+      fontSize = 100; // Medium text
     } else {
-      fontSize = baseSize - 30;
+      fontSize = 50; // Smallest text for longer content
     }
-    
-    // Make sure we don't go below minimum size
-    fontSize = Math.max(fontSize, minSize);
     
     // Apply the font size
     element.style.fontSize = `${fontSize}px`;
