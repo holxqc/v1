@@ -52,8 +52,11 @@ header h1 {
   padding: 20px;
   flex: 1; /* Take up available space */
   display: flex;
+  flex-direction: column;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start; /* Align content to top */
+  padding-top: 50px; /* Push down from the very top */
+  overflow-y: auto; /* Add scrolling if needed */
 }
 
 .milton-font {
@@ -63,6 +66,8 @@ header h1 {
   width: 100%;
   text-align: center;
   -webkit-font-smoothing: antialiased; /* Makes text smoother */
+  white-space: pre-wrap; /* Preserve line breaks */
+  max-width: 100%;
 }
 
 .controls {
