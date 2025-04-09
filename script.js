@@ -56,14 +56,32 @@ document.addEventListener('DOMContentLoaded', function() {
       backgroundColor: "#636675", // Light blue
     }
   ];
+  
+  // Basic themes (black/white)
+  const basicThemes = [
+    {
+      name: "Black on White",
+      textColor: "#000000", // Black
+      backgroundColor: "#FFFFFF", // White
+    },
+    {
+      name: "White on Black",
+      textColor: "#FFFFFF", // White
+      backgroundColor: "#000000", // Black
+    }
+  ];
+
+  // Current basic theme index (0 = black on white, 1 = white on black)
+  let currentBasicTheme = 0;
 
   // Default values
   const defaultSettings = {
     text: 'Milton Generator',
     thickness: 0.5,
-    textColor: "#1A5276", // Default to Born To Die text color
-    backgroundColor: "#F5EEF8", // Default to Born To Die background
-    themeIndex: 0 // Default theme index
+    textColor: "#000000", // Default to black text
+    backgroundColor: "#FFFFFF", // Default to white background
+    themeType: 'basic',
+    themeIndex: 0 // Default to Black on White
   };
   
   // Make container transparent
@@ -71,7 +89,7 @@ document.addEventListener('DOMContentLoaded', function() {
     container.style.backgroundColor = 'transparent';
   }
   
-  // Create theme bubbles
+  // Create theme bubbles for album themes
   themeBubbles.innerHTML = ''; // Clear any existing bubbles
   albumThemes.forEach((theme, index) => {
     const bubble = document.createElement('div');
@@ -80,27 +98,30 @@ document.addEventListener('DOMContentLoaded', function() {
     // Just use background color for the circle
     bubble.style.backgroundColor = theme.backgroundColor;
     
-    // Remove tooltip
-    bubble.innerHTML = '';
     bubble.dataset.index = index;
+    bubble.dataset.type = 'album';
     
     bubble.addEventListener('click', () => {
       document.querySelectorAll('.theme-bubble').forEach(b => b.classList.remove('active'));
       bubble.classList.add('active');
       
       // Apply the theme
-      applyTheme(index);
+      applyTheme('album', index);
+      
+      // Update the reset button to show the next state (White on Black)
+      updateResetButton();
       
       // Save to localStorage
+      localStorage.setItem('miltonThemeType', 'album');
       localStorage.setItem('miltonThemeIndex', index);
     });
     
     themeBubbles.appendChild(bubble);
   });
   
-  // Apply a theme by index
-  function applyTheme(index) {
-    const theme = albumThemes[index];
+  // Apply a theme by type and index
+  function applyTheme(type, index) {
+    const theme = type === 'album' ? albumThemes[index] : basicThemes[index];
     
     // Apply text color
     displayText.style.color = theme.textColor;
@@ -125,6 +146,40 @@ document.addEventListener('DOMContentLoaded', function() {
     // Save to localStorage
     localStorage.setItem('miltonTextColor', theme.textColor);
     localStorage.setItem('miltonBackgroundColor', theme.backgroundColor);
+    
+    // Update currentBasicTheme if we're using a basic theme
+    if (type === 'basic') {
+      currentBasicTheme = index;
+      localStorage.setItem('miltonBasicThemeIndex', index);
+    }
+  }
+
+  // Function to update reset button appearance based on current state
+  function updateResetButton() {
+    const themeType = localStorage.getItem('miltonThemeType') || defaultSettings.themeType;
+    
+    if (themeType === 'album') {
+      // If using an album theme, show button for Black on White
+      resetButton.textContent = 'BLACK ON WHITE';
+      resetButton.style.backgroundColor = '#FFFFFF';
+      resetButton.style.color = '#000000';
+      resetButton.dataset.nextTheme = 'basic-0';
+    } else {
+      // Using a basic theme, toggle between White on Black and Black on White
+      if (currentBasicTheme === 0) {
+        // Currently Black on White, show button for White on Black
+        resetButton.textContent = 'WHITE ON BLACK';
+        resetButton.style.backgroundColor = '#000000';
+        resetButton.style.color = '#FFFFFF';
+        resetButton.dataset.nextTheme = 'basic-1';
+      } else {
+        // Currently White on Black, show button for Black on White
+        resetButton.textContent = 'BLACK ON WHITE';
+        resetButton.style.backgroundColor = '#FFFFFF';
+        resetButton.style.color = '#000000';
+        resetButton.dataset.nextTheme = 'basic-0';
+      }
+    }
   }
   
   // Initialize text input with saved content or empty string
@@ -140,8 +195,13 @@ document.addEventListener('DOMContentLoaded', function() {
   // Initialize settings from localStorage or use defaults
   const savedThickness = localStorage.getItem('miltonThickness') || defaultSettings.thickness;
   const savedTextColor = localStorage.getItem('miltonTextColor') || defaultSettings.textColor;
+  const savedThemeType = localStorage.getItem('miltonThemeType') || defaultSettings.themeType;
   const savedThemeIndex = localStorage.getItem('miltonThemeIndex') || defaultSettings.themeIndex;
+  const savedBasicThemeIndex = localStorage.getItem('miltonBasicThemeIndex') || 0;
   const savedBackgroundColor = localStorage.getItem('miltonBackgroundColor') || defaultSettings.backgroundColor;
+  
+  // Set current basic theme
+  currentBasicTheme = parseInt(savedBasicThemeIndex);
   
   // Apply saved settings
   thicknessSlider.value = savedThickness;
@@ -158,10 +218,15 @@ document.addEventListener('DOMContentLoaded', function() {
   }
   
   // Set active theme bubble
-  const activeBubble = document.querySelector(`.theme-bubble[data-index="${savedThemeIndex}"]`);
-  if (activeBubble) {
-    activeBubble.classList.add('active');
+  if (savedThemeType === 'album') {
+    const activeBubble = document.querySelector(`.theme-bubble[data-type="album"][data-index="${savedThemeIndex}"]`);
+    if (activeBubble) {
+      activeBubble.classList.add('active');
+    }
   }
+  
+  // Update the reset button appearance
+  updateResetButton();
   
   // Event listeners
   // Input event for text field
@@ -201,30 +266,44 @@ document.addEventListener('DOMContentLoaded', function() {
   });
   
   resetButton.addEventListener('click', function() {
-    // Reset text
-    inputText.value = '';
-    displayText.textContent = defaultSettings.text;
+    // Get next theme from data attribute
+    const nextTheme = this.dataset.nextTheme.split('-');
+    const themeType = nextTheme[0];
+    const themeIndex = parseInt(nextTheme[1]);
     
-    // Auto-size the text
-    autoSizeText(displayText, defaultSettings.text);
-    
-    // Reset thickness
-    thicknessSlider.value = defaultSettings.thickness;
-    thicknessValue.textContent = defaultSettings.thickness;
-    displayText.style.fontWeight = getWeightFromThickness(defaultSettings.thickness);
-    
-    // Reset theme to first theme
-    applyTheme(0);
+    // Clear any active theme bubbles
     document.querySelectorAll('.theme-bubble').forEach(b => b.classList.remove('active'));
-    document.querySelector('.theme-bubble[data-index="0"]').classList.add('active');
     
-    // Clear localStorage
-    localStorage.removeItem('miltonText');
-    localStorage.removeItem('miltonFontSize');
-    localStorage.removeItem('miltonThickness');
-    localStorage.removeItem('miltonTextColor');
-    localStorage.removeItem('miltonBackgroundColor');
-    localStorage.removeItem('miltonThemeIndex');
+    // If album theme, activate the corresponding bubble
+    if (themeType === 'album') {
+      const bubble = document.querySelector(`.theme-bubble[data-type="album"][data-index="${themeIndex}"]`);
+      if (bubble) bubble.classList.add('active');
+    }
+    
+    // Reset text only if switching to Black on White
+    if (themeType === 'basic' && themeIndex === 0) {
+      inputText.value = '';
+      displayText.textContent = defaultSettings.text;
+      autoSizeText(displayText, defaultSettings.text);
+      localStorage.removeItem('miltonText');
+      localStorage.removeItem('miltonFontSize');
+      
+      // Reset thickness
+      thicknessSlider.value = defaultSettings.thickness;
+      thicknessValue.textContent = defaultSettings.thickness;
+      displayText.style.fontWeight = getWeightFromThickness(defaultSettings.thickness);
+      localStorage.removeItem('miltonThickness');
+    }
+    
+    // Apply the theme
+    applyTheme(themeType, themeIndex);
+    
+    // Update localStorage
+    localStorage.setItem('miltonThemeType', themeType);
+    localStorage.setItem('miltonThemeIndex', themeIndex);
+    
+    // Update the reset button
+    updateResetButton();
   });
   
   // Auto-size text based on content length with much larger sizes
@@ -284,5 +363,9 @@ document.addEventListener('DOMContentLoaded', function() {
   }
   
   // Apply the current theme immediately
-  applyTheme(parseInt(savedThemeIndex || 0));
+  if (savedThemeType === 'album') {
+    applyTheme(savedThemeType, parseInt(savedThemeIndex || 0));
+  } else {
+    applyTheme('basic', parseInt(savedBasicThemeIndex || 0));
+  }
 });
