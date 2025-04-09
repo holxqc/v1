@@ -52,8 +52,8 @@ document.addEventListener('DOMContentLoaded', function() {
     },
     {
       name: "Did You Know That There's a Tunnel Under Ocean Blvd",
-      textColor: "#7D3C98", // Purple
-      backgroundColor: "#D6EAF8", // Light blue
+      textColor: "#FCE59B", // Purple
+      backgroundColor: "#636675", // Light blue
     }
   ];
 
