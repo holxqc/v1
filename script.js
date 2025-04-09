@@ -17,13 +17,13 @@ document.addEventListener('DOMContentLoaded', function() {
   const albumThemes = [
     {
       name: "Born To Die",
-      textColor: "#1A5276", // Deep blue
-      backgroundColor: "#F5EEF8", // Light lavender
+      textColor: "#F1EFF1", // Deep blue
+      backgroundColor: "#86A1CC", // Light lavender
     },
     {
       name: "Ultraviolence",
       textColor: "#FFFFFF", // White
-      backgroundColor: "#17202A", // Black/dark blue
+      backgroundColor: "#323234", // Black/dark blue
     },
     {
       name: "Honeymoon",
@@ -37,8 +37,8 @@ document.addEventListener('DOMContentLoaded', function() {
     },
     {
       name: "Norman Fucking Rockwell",
-      textColor: "#1E8449", // Ocean green
-      backgroundColor: "#FAD7A0", // Golden sunset
+      textColor: "#39484C", // Ocean green
+      backgroundColor: "#DCDBA3", // Golden sunset
     },
     {
       name: "Chemtrails Over the Country Club",
