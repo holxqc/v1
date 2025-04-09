@@ -280,22 +280,7 @@ document.addEventListener('DOMContentLoaded', function() {
       if (bubble) bubble.classList.add('active');
     }
     
-    // Reset text only if switching to Black on White
-    if (themeType === 'basic' && themeIndex === 0) {
-      inputText.value = '';
-      displayText.textContent = defaultSettings.text;
-      autoSizeText(displayText, defaultSettings.text);
-      localStorage.removeItem('miltonText');
-      localStorage.removeItem('miltonFontSize');
-      
-      // Reset thickness
-      thicknessSlider.value = defaultSettings.thickness;
-      thicknessValue.textContent = defaultSettings.thickness;
-      displayText.style.fontWeight = getWeightFromThickness(defaultSettings.thickness);
-      localStorage.removeItem('miltonThickness');
-    }
-    
-    // Apply the theme
+    // Apply the theme (don't reset text)
     applyTheme(themeType, themeIndex);
     
     // Update localStorage
