@@ -22,8 +22,8 @@ document.addEventListener('DOMContentLoaded', function() {
     },
     {
       name: "Ultraviolence",
-      textColor: "#FFFFFF", // White
-      backgroundColor: "#323234", // Black/dark blue
+      textColor: "#E1E1E3", // White
+      backgroundColor: "#646466", // Black/dark blue
     },
     {
       name: "Honeymoon",
@@ -42,8 +42,8 @@ document.addEventListener('DOMContentLoaded', function() {
     },
     {
       name: "Chemtrails Over the Country Club",
-      textColor: "#34495E", // Navy blue
-      backgroundColor: "#F2F3F4", // Off-white
+      textColor: "#FFFFFF", // Navy blue
+      backgroundColor: "#2D2D2D", // Off-white
     },
     {
       name: "Blue Banisters",
