@@ -77,8 +77,8 @@ document.addEventListener('DOMContentLoaded', function() {
     const bubble = document.createElement('div');
     bubble.className = 'theme-bubble';
     
-    // Create a diagonal split using a gradient
-    bubble.style.background = `linear-gradient(to bottom right, ${theme.textColor} 49%, ${theme.backgroundColor} 51%)`;
+    // Just use background color for the circle
+    bubble.style.backgroundColor = theme.backgroundColor;
     
     // Remove tooltip
     bubble.innerHTML = '';
