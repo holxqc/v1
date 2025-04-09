@@ -47,8 +47,8 @@ document.addEventListener('DOMContentLoaded', function() {
     },
     {
       name: "Blue Banisters",
-      textColor: "#2471A3", // Blue
-      backgroundColor: "#FFFFFF", // White
+      textColor: "#372623", // Blue
+      backgroundColor: "#F9F9DD", // White
     },
     {
       name: "Did You Know That There's a Tunnel Under Ocean Blvd",
