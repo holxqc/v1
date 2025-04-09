@@ -171,13 +171,13 @@ footer {
   }
 }
 
-/* Updated theme selector to position in top right */
+/* Updated theme selector to position in top left */
 .theme-selector {
   display: flex;
   flex-direction: column;
   position: absolute;
   top: 15px;
-  right: 15px;
+  left: 15px;
   z-index: 10;
   background-color: transparent;
 }
@@ -188,18 +188,17 @@ footer {
   color: #333;
 }
 
-/* Updated theme bubbles with smaller max-width and different alignment */
+/* Updated theme bubbles to be in one line */
 .theme-bubbles {
   display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-  max-width: 120px; /* Limits how many bubbles appear in a row */
+  flex-wrap: nowrap; /* Keep all in one line */
+  gap: 5px; /* Smaller gap */
 }
 
 /* Updated theme bubble with smaller size */
 .theme-bubble {
-  width: 25px; /* Smaller size */
-  height: 25px; /* Smaller size */
+  width: 20px; /* Even smaller size */
+  height: 20px; /* Even smaller size */
   border-radius: 50%;
   cursor: pointer;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
