@@ -27,8 +27,8 @@ document.addEventListener('DOMContentLoaded', function() {
     },
     {
       name: "Honeymoon",
-      textColor: "#E74C3C", // Red
-      backgroundColor: "#F9E79F", // Soft yellow
+      textColor: "#AE201A", // Red
+      backgroundColor: "#B0DFF1", // Soft yellow
     },
     {
       name: "Lust for Life",
